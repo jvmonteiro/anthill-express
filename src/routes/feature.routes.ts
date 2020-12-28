@@ -1,5 +1,5 @@
 import { FeatureController } from '../entities/feature/feature.controller';
-import { FeatureType, Feature, FeatureSchema } from '../entities/feature/feature.model';
+import { Feature, FeatureSchema } from '../entities/feature/feature.model';
 import { FeatureService } from '../entities/feature/feature.svc';
 import { Router, Request, Response } from 'express';
 

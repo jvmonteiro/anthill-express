@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { FeatureDocument, FeatureType } from 'src/entities/feature/feature.model';
+import { FeatureDocument, FeatureType } from './feature.model';
 
 export interface IFeatureService<T extends FeatureType> {
   createFeature(feat: T): Promise<T>;
