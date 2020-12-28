@@ -1,13 +1,17 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 export class MongoDB {
   private readonly connectionString: string;
   private readonly options: mongoose.ConnectionOptions;
-  constructor(cnStr: string, opts: mongoose.ConnectionOptions) {
+  constructor(cnStr: string, opts?: mongoose.ConnectionOptions) {
     this.connectionString = cnStr;
     this.options =
       opts ?? <mongoose.ConnectionOptions>{ useNewUrlParser: true, useUnifiedTopology: true };
   }
-  public static connect(connectionString: string, options: mongoose.ConnectionOptions): void {
-    mongoose.connect(connectionString, options);
+  public connectDB(): void {
+    mongoose.connect(this.connectionString, this.options);
+    const connection = mongoose.connection;
+    connection.once('open', () => {
+      console.log("Connected to database! You're free to use the APIs now!");
+    });
   }
 }

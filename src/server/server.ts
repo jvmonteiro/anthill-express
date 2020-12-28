@@ -3,8 +3,15 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { featRouter } from '../routes/feature.routes';
+
+// Setup Mongo connection
+import { url } from '../config/mongo.config';
+import { MongoDB } from '../db';
+
 export const server = () => {
   const app = express();
+  const mongoConn = url();
+  const db = new MongoDB(mongoConn).connectDB();
 
   // Setup CORS
   app.use((req, res, next) => {
@@ -14,6 +21,7 @@ export const server = () => {
       'Access-Control-Allow-Methods': ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       'Access-Control-Allow-Credentials': 'true',
     });
+    next();
   });
   app.use(helmet());
   app.use(cookieParser());

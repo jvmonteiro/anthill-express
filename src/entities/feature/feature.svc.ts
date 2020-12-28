@@ -15,13 +15,14 @@ export class FeatureService implements IFeatureService<FeatureType> {
     this._featureModel = featureModel;
   }
   async createFeature(feat: FeatureType): Promise<FeatureType> {
-    return new this._featureModel(feat);
+    const feature = new this._featureModel(feat);
+    return await feature.save();
   }
   async getSingleFeature(featId: string): Promise<FeatureType> {
     return await this._featureModel.findById(featId);
   }
   async getManyFeatures(): Promise<FeatureType[]> {
-    return await this._featureModel.find();
+    return await this._featureModel.find().exec();
   }
   async deleteFeature(featId: string): Promise<FeatureType> {
     return await this._featureModel.deleteOne({ _id: featId });
