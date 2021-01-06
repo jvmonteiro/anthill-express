@@ -3,10 +3,11 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { featRouter } from '../routes/feature.routes';
-
+import { loginRouter } from '../routes/login.routes';
 // Setup Mongo connection
 import { url } from '../config/mongo.config';
 import { MongoDB } from '../db';
+import passport from 'passport';
 
 export const server = () => {
   const app = express();
@@ -23,11 +24,14 @@ export const server = () => {
     });
     next();
   });
+  app.use(passport.initialize());
   app.use(helmet());
   app.use(cookieParser());
   app.use(bodyParser.json());
 
+  loginRouter(app);
   // Routes
   app.use('/features', featRouter);
+
   return app;
 };
